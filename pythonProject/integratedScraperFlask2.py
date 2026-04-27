@@ -5,7 +5,6 @@ import requests
 import re
 from urllib.parse import urljoin, urlparse
 import html
-import codecs
 import json
 import pandas as pd
 import os
@@ -106,18 +105,27 @@ def extract_data(soup):
     data["emails"] = list(set(cleaned_emails))
 
     #phone
-    phones_raw = re.findall(r"(?<!\.)(?<!\d)\b(?:\+?\d{1,3}[\s\-])?(?:\(?\d{2,4}\)?[\s\-])?\d{3,4}[\s\-]\d{3,4}[\s\-]?\d{4}\b",
-    str(soup))
+    phones_raw = re.findall(
+    r'(?<!\d)'r'(?:\+44|\+353|0)'r'[\s.\-]?'r'\d{2,5}'r'[\s.\-]?'r'\d{3,5}'r'(?:[\s.\-]?\d{3,5})?'r'(?!\d)',str(soup))
 
-    #trying to stop false positives
+    
     phones = []
+    unique_phone = set()
     for phone in phones_raw:
-        digits_only = re.sub(r'\D', '', phone)
-        if 7 <= len(digits_only) <= 15:
+        digits = re.sub(r"\D", '', phone)
+
+        if digits.startswith("44"):             #+44 numbers
+            valid = len(digits) - 2 == 10
+        elif digits.startswith("353"):          #+353 numbers
+            valid = 8 <= len(digits) - 3 <= 9
+        else:
+            valid = 9 <= len(digits) <= 11      #085 or 07 etc numbers
+
+        if valid and digits not in unique_phone:
+            unique_phone.add(digits)
             phones.append(phone.strip())
 
-    #no duplicates
-    data["phone"] = list(set(phones))
+    data["phone"] = phones
 
     return data
 
@@ -277,14 +285,14 @@ def results():
 
     #count emails, pages and phone numbers
     total_emails = 0
-    for page in results:
+    for page in data:
         total_emails += len(page["emails"])
 
     total_phone = 0
-    for page in results:
+    for page in data:
         total_phone += len(page["phone"])
 
-    total_pages = len(results)
+    total_pages = len(data)
 
     summary = {"pages": total_pages, "emails": total_emails, "phone": total_phone}
         
