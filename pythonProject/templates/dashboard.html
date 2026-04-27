@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title> Scraper </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <script>
+                function showLoading() {
+                    document.getElementById("page_loading").style.display = "block";
+                }
+        </script>
+
+        <nav> 
+
+                <a href="/">Dashboard</a>
+                <a href="/results">Results</a>
+                <a href="/logout">Logout</a>
+
+        </nav>
+            <h2>Website Scraper</h2>
+            <p>Enter the URL of the website you would like to scrape</p>
+
+
+            <form action="/scan" method="post" onsubmit="showLoading()">
+                <input type="text" name="url" placeholder="https://example.com" required>
+                <br>
+                <button type="submit">Scrape Website</button>
+            </form>
+            <p id="page_loading" style="display:none;">Scraping....</p>
+            <br>
+            <p>Note: Only Authorised Users Should Use this Tool</p>
+
+            <a href="/logout">Logout</a>
+
+            <div class="footer">
+
+                <p> InfoCheck 2026</p>
+
+            </div>
+    </body>
+</html>

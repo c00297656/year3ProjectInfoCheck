@@ -1,0 +1,63 @@
+
+<html>
+    <head>
+        <title> Results </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+
+        <nav> 
+
+                <a href="/">Dashboard</a>
+                <a href="/results">Results</a>
+                <a href="/logout">Logout</a>
+
+        </nav>
+
+            <h1>Scan Results</h1>
+            <a href="/download" class="download">Download Results (json format)</a>
+            <a href="/download/csv" class="download">Download Results (csv format)</a>
+
+            <h2> Scan summary</h2>
+            <p> Total pages scanned: {{summary.pages}}</p>
+            <p> Total Emails found: {{summary.emails}}</p>
+            <p> Total Phone numbers found: {{summary.phone}}</p>
+
+            {% for page in results %}
+
+            <h3>{{ page.url }}</h3>
+
+            <h4><b>Page Title:</b></h4> <p> {{ page.title }}</p>
+
+            <h4><b>Page Headings:</h4></p>
+            <ul class="results">
+            {% for h in page.headings %}
+            <li>{{ h }}</li>
+            {% endfor %}
+            </ul>
+
+            <h4><b>Emails Found:</b></h4>
+            <ul class="results">
+            {% for email in page.emails %}
+            <li>{{ email }}</li>
+            {% endfor %}
+            </ul>
+
+            <h4><b>Phone Numbers Found:</b></h4>
+            <ul class="results">
+            {% for phone in page.phone %}
+            <li>{{ phone }}</li>
+            {% endfor %}
+            </ul>
+
+            <hr>
+            {% endfor %}
+
+
+        <div class="footer">
+
+            <p> InfoCheck 2026</p>
+
+        </div>
+    </body>
+</html>

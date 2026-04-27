@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <h1>Welcome to the InfoCheck Web Page</h1>
+        <p> InfoCheck aims to alert companies that the things they may be putting online are not safe.<br>
+            InfoCheck is a web scraping tool built in Python that scrapes information from websites<br>
+            in order to examine how much information any such company is putting online.<br>
+            InfoCheck is designed to simulate how an attacker will behave in regards to the MITRE ATT&CK Framework.<br>
+
+        </p>
+        <br>
+        <h3>Login Below</h3>
+        <br>
+        <form method="POST">
+            Username:<br>
+            <input type="text" name="username" placeholder="Username"><br>
+            Password:<br>
+            <input type="password" name="password" placeholder="Password"><br>
+            <input type="submit" value="Login">
+        </form>
+        <br>
+        <h2>About InfoCheck</h2>
+        <p> 
+            InfoCheck was built with Python and Gazpacho for web scraping,<br> 
+            when using InfoCheck you should be able to see <br>
+            page titles, headings, phone numbers and emails that appear<br>
+            on the website of the URL you enter.<br> 
+            Results will appear showing you what was found on each page of the website.<br>
+        </p>
+
+        <div class="footer">
+
+                <p> InfoCheck 2026</p>
+
+        </div>
+
+    </body>
+</html>
